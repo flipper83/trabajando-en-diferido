@@ -1,0 +1,4 @@
+<resources>
+  <string name="app_name">Trabajando en diferido</string>
+  <string name="button_asynctask">AsyncTask</string>
+</resources>

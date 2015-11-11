@@ -1,0 +1,50 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_num_thread"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="5thread"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/gap_normal"
+        />
+
+    <LinearLayout
+        android:id="@+id/ll_buttons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical"
+        android:layout_below="@id/tv_num_thread"
+        android:layout_marginTop="@dimen/gap_normal"
+        >
+
+      <Button
+          android:id="@+id/bt_asynctask"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/button_asynctask"
+          />
+    </LinearLayout>
+
+    <TextView
+        tools:text="Thread 1"
+        android:id="@+id/tv_threads"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_buttons"
+        android:layout_marginLeft="@dimen/gap_normal"
+        android:layout_marginTop="@dimen/gap_normal"
+        />
+
+  </RelativeLayout>
+</ScrollView>
