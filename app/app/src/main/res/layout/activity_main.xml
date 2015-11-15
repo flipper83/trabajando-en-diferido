@@ -18,13 +18,23 @@
         android:layout_marginTop="@dimen/gap_normal"
         />
 
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/time_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/gap_normal"
+        android:layout_below="@id/tv_num_thread"
+        />
+
     <LinearLayout
         android:id="@+id/ll_buttons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:orientation="vertical"
-        android:layout_below="@id/tv_num_thread"
+        android:layout_below="@id/tv_time"
         android:layout_marginTop="@dimen/gap_normal"
         >
 
