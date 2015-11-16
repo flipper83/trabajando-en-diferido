@@ -7,15 +7,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import com.karumi.trabajandoendiferido.api.ApiCall;
-import com.karumi.trabajandoendiferido.api.response.ApiResponse;
 import com.karumi.trabajandoendiferido.server.MockApiCalls;
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.Response;
-import retrofit.Retrofit;
+import com.karumi.trabajandoendiferido.task.Task;
+import com.karumi.trabajandoendiferido.task.TaskWithAsyncTask;
+import com.karumi.trabajandoendiferido.ui.Ui;
 import trabajandoendiferido.karumi.com.trabajandoendiferido.R;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements Ui {
 
   private TextView numThreadView;
   private TextView threadsView;
@@ -52,47 +50,37 @@ public class MainActivity extends Activity {
 
   private void launchAsyncTask() {
 
-    timeSending = System.currentTimeMillis();
-    setTimeLoading();
-
     if (apiCall == null) {
       apiCall = new ApiCall(mockApiCalls);
       apiCall.init();
     }
 
-    Call<ApiResponse> call = apiCall.callOneAsync();
+    Task task = new TaskWithAsyncTask(apiCall);
 
-    call.enqueue(new Callback<ApiResponse>() {
-      @Override public void onResponse(Response<ApiResponse> response, Retrofit retrofit) {
-        int code = response.code();
-        if (code == 200) {
-          long timeDiff = System.currentTimeMillis() - timeSending;
-          setTime("" + timeDiff);
-        } else {
-          setTime("error " + code);
-        }
-      }
-
-      @Override public void onFailure(Throwable t) {
-        setTime("error " + t);
-      }
-    });
-  }
-
-  private void setTimeLoading() {
-    String time = getString(R.string.time_title) + " " + getString(R.string.loading);
-    timeView.setText(time);
-  }
-
-  private void setTime(String time) {
-    String timeComposed = getString(R.string.time_title) + " " + time;
-    timeView.setText(timeComposed);
+    timeSending = System.currentTimeMillis();
+    setTimeLoading();
+    task.executeTask(this);
   }
 
   @Override protected void onResume() {
     super.onResume();
     updateThreads();
     // in on resume only exist 3 threads, binder and main.
+  }
+
+  @Override public void showError(String errorCode) {
+
+  }
+
+  @Override public void showTime(long time) {
+    long timeDiff = System.currentTimeMillis() - timeSending;
+    String timeComposed = getString(R.string.time_title) + " " + timeDiff;
+    timeView.setText(timeComposed);
+  }
+
+  private void setTimeLoading() {
+    String time = getString(R.string.time_title) + " " + getString(R.string.loading);
+    timeView.setText(time);
   }
 
   private void updateThreads() {
@@ -104,7 +92,8 @@ public class MainActivity extends Activity {
     String threadsText = "";
     for (Thread thread : threads) {
       if (thread != null) {
-        threadsText += thread.getName() + "/\n";
+        threadsText += thread.getName() +" "+ thread.getState().name()+ "/\n";
+
       }
     }
     threadsView.setText(threadsText);

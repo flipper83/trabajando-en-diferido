@@ -5,8 +5,10 @@ import com.karumi.trabajandoendiferido.server.ApiRest;
 import com.karumi.trabajandoendiferido.server.MockApiCalls;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.logging.HttpLoggingInterceptor;
+import java.io.IOException;
 import retrofit.Call;
 import retrofit.GsonConverterFactory;
+import retrofit.Response;
 import retrofit.Retrofit;
 
 /**
@@ -34,7 +36,8 @@ public class ApiCall {
     apiRest = retrofit.create(ApiRest.class);
   }
 
-  public Call<ApiResponse> callOneAsync() {
-    return apiRest.apiOne();
+  public Response<ApiResponse> callSync(int type) throws IOException {
+    Call<ApiResponse> call = apiRest.api(type);
+    return call.execute();
   }
 }

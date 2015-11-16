@@ -25,6 +25,7 @@ public class MockApiCalls {
           @Override public MockResponse dispatch(RecordedRequest request)
               throws InterruptedException {
             if (request.getPath().equals("/1/")) {
+              Thread.sleep(2000);
               return new MockResponse().setResponseCode(OK_STATUS).setBody("{\"value\":\"1\"}");
             } else if (request.getPath().equals("/2/")) {
               return new MockResponse().setResponseCode(OK_STATUS).setBody("{\"value\":\"2\"}");
