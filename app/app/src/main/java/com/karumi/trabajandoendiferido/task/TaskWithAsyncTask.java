@@ -17,6 +17,7 @@ public class TaskWithAsyncTask implements Task {
   }
 
   @Override public void executeTask(final Ui ui, int totalTask) {
+    finishedTasks = 0;
     for (int i = 1; i < totalTask + 1; i++) {
       AsyncTask<Void, Void, ApiResponse> task = new MyAsyncTask(ui, i, totalTask + 1);
       // from api 4 to api 11 threadPull after an before, one thread.
