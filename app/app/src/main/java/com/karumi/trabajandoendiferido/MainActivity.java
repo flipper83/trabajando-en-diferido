@@ -59,7 +59,7 @@ public class MainActivity extends Activity implements Ui {
 
     timeSending = System.currentTimeMillis();
     setTimeLoading();
-    task.executeTask(this);
+    task.executeTask(this, 3);
   }
 
   @Override protected void onResume() {
@@ -92,8 +92,7 @@ public class MainActivity extends Activity implements Ui {
     String threadsText = "";
     for (Thread thread : threads) {
       if (thread != null) {
-        threadsText += thread.getName() +" "+ thread.getState().name()+ "/\n";
-
+        threadsText += thread.getName() + " " + thread.getState().name() + "/\n";
       }
     }
     threadsView.setText(threadsText);

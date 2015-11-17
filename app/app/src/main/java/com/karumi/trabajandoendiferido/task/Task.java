@@ -6,5 +6,5 @@ import com.karumi.trabajandoendiferido.ui.Ui;
  *
  */
 public interface Task {
-  public void executeTask(Ui ui);
+  public void executeTask(Ui ui, int totalTask);
 }
