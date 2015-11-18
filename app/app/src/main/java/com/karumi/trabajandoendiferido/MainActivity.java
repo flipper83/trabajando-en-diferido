@@ -12,6 +12,7 @@ import com.karumi.trabajandoendiferido.server.MockApiCalls;
 import com.karumi.trabajandoendiferido.task.Task;
 import com.karumi.trabajandoendiferido.task.TaskWithAsyncTask;
 import com.karumi.trabajandoendiferido.task.TaskWithPromise;
+import com.karumi.trabajandoendiferido.task.TaskWithRx;
 import com.karumi.trabajandoendiferido.ui.Ui;
 import trabajandoendiferido.karumi.com.trabajandoendiferido.R;
 
@@ -23,10 +24,11 @@ public class MainActivity extends Activity implements Ui {
 
   Handler handler = new Handler();
   private Button asyncTaskButton;
+  private Button promisesButton;
+  private Button rxButton;
   private TextView timeView;
   private long timeSending;
   private ApiCall apiCall;
-  private Button promisesButton;
   private TextView memView;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
@@ -58,22 +60,30 @@ public class MainActivity extends Activity implements Ui {
         launchPromise();
       }
     });
+
+    rxButton = ((Button) findViewById(R.id.bt_rx));
+    rxButton.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        launchRx();
+      }
+    });
+  }
+
+  private void launchRx() {
+    initApiCall();
+    Task task = new TaskWithRx(apiCall);
+    startTask(task);
   }
 
   private void launchPromise() {
     initApiCall();
-
     Task task = new TaskWithPromise(apiCall);
-
     startTask(task);
   }
 
   private void launchAsyncTask() {
-
     initApiCall();
-
     Task task = new TaskWithAsyncTask(apiCall);
-
     startTask(task);
   }
 

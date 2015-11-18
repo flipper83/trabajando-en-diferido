@@ -64,6 +64,15 @@
             android:layout_marginRight="@dimen/gap_normal"
             android:text="@string/button_promises"
             />
+
+        <Button
+            android:id="@+id/bt_rx"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/gap_normal"
+            android:layout_marginRight="@dimen/gap_normal"
+            android:text="@string/button_rx"
+            />
     </LinearLayout>
 
     <TextView

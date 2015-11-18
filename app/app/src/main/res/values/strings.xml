@@ -4,4 +4,5 @@
   <string name="time_title">Time:</string>
   <string name="loading">Loading ...</string>
   <string name="button_promises">Promises</string>
+  <string name="button_rx">Reactive</string>
 </resources>

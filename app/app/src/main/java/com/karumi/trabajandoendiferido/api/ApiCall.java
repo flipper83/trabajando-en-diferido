@@ -11,6 +11,8 @@ import retrofit.Callback;
 import retrofit.GsonConverterFactory;
 import retrofit.Response;
 import retrofit.Retrofit;
+import retrofit.RxJavaCallAdapterFactory;
+import rx.Observable;
 
 /**
  *
@@ -32,6 +34,7 @@ public class ApiCall {
     Retrofit retrofit = new Retrofit.Builder().baseUrl(mockApiCalls.getUrl())
         .client(client)
         .addConverterFactory(GsonConverterFactory.create())
+        .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
         .build();
 
     apiRest = retrofit.create(ApiRest.class);
@@ -45,5 +48,9 @@ public class ApiCall {
   public void callAsync(int type, Callback<ApiResponse> callback) {
     Call<ApiResponse> call = apiRest.api(type);
     call.enqueue(callback);
+  }
+
+  public Observable<ApiResponse> callObservable(int type) {
+    return apiRest.apiObservable(type);
   }
 }
