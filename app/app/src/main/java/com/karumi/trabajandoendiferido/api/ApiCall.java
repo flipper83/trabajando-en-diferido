@@ -7,6 +7,7 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.logging.HttpLoggingInterceptor;
 import java.io.IOException;
 import retrofit.Call;
+import retrofit.Callback;
 import retrofit.GsonConverterFactory;
 import retrofit.Response;
 import retrofit.Retrofit;
@@ -39,5 +40,10 @@ public class ApiCall {
   public Response<ApiResponse> callSync(int type) throws IOException {
     Call<ApiResponse> call = apiRest.api(type);
     return call.execute();
+  }
+
+  public void callAsync(int type, Callback<ApiResponse> callback) {
+    Call<ApiResponse> call = apiRest.api(type);
+    call.enqueue(callback);
   }
 }

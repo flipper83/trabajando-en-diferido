@@ -11,6 +11,7 @@ import com.karumi.trabajandoendiferido.api.ApiCall;
 import com.karumi.trabajandoendiferido.server.MockApiCalls;
 import com.karumi.trabajandoendiferido.task.Task;
 import com.karumi.trabajandoendiferido.task.TaskWithAsyncTask;
+import com.karumi.trabajandoendiferido.task.TaskWithPromise;
 import com.karumi.trabajandoendiferido.ui.Ui;
 import trabajandoendiferido.karumi.com.trabajandoendiferido.R;
 
@@ -25,6 +26,7 @@ public class MainActivity extends Activity implements Ui {
   private TextView timeView;
   private long timeSending;
   private ApiCall apiCall;
+  private Button promisesButton;
   private TextView memView;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
@@ -49,20 +51,43 @@ public class MainActivity extends Activity implements Ui {
         launchAsyncTask();
       }
     });
+
+    promisesButton = ((Button) findViewById(R.id.bt_promises));
+    promisesButton.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        launchPromise();
+      }
+    });
+  }
+
+  private void launchPromise() {
+    initApiCall();
+
+    Task task = new TaskWithPromise(apiCall);
+
+    startTask(task);
   }
 
   private void launchAsyncTask() {
 
+    initApiCall();
+
+    Task task = new TaskWithAsyncTask(apiCall);
+
+    startTask(task);
+  }
+
+  private void startTask(Task task) {
+    timeSending = System.currentTimeMillis();
+    setTimeLoading();
+    task.executeTask(this, 3);
+  }
+
+  private void initApiCall() {
     if (apiCall == null) {
       apiCall = new ApiCall(mockApiCalls);
       apiCall.init();
     }
-
-    Task task = new TaskWithAsyncTask(apiCall);
-
-    timeSending = System.currentTimeMillis();
-    setTimeLoading();
-    task.executeTask(this, 3);
   }
 
   @Override protected void onResume() {
