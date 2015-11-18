@@ -1,6 +1,7 @@
 package com.karumi.trabajandoendiferido;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -24,6 +25,7 @@ public class MainActivity extends Activity implements Ui {
   private TextView timeView;
   private long timeSending;
   private ApiCall apiCall;
+  private TextView memView;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -37,6 +39,7 @@ public class MainActivity extends Activity implements Ui {
 
   private void mapUi() {
     numThreadView = ((TextView) findViewById(R.id.tv_num_thread));
+    memView = ((TextView) findViewById(R.id.tv_mem));
     threadsView = ((TextView) findViewById(R.id.tv_threads));
     timeView = ((TextView) findViewById(R.id.tv_time));
 
@@ -103,6 +106,19 @@ public class MainActivity extends Activity implements Ui {
   private Runnable refreshThread = new Runnable() {
     @Override public void run() {
       updateThreads();
+      updateFreeMem();
     }
   };
+
+  private void updateFreeMem() {
+    ActivityManager.MemoryInfo mi = new ActivityManager.MemoryInfo();
+    ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+    activityManager.getMemoryInfo(mi);
+    long availableMegs = mi.availMem / 1048576L;
+
+    //Percentage can be calculated for API 16+
+    long percentAvail = mi.availMem / mi.totalMem;
+
+    memView.setText("mem: " + availableMegs + "Mb / " + percentAvail);
+  }
 }
