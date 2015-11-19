@@ -73,6 +73,15 @@
             android:layout_marginRight="@dimen/gap_normal"
             android:text="@string/button_rx"
             />
+        <Button
+            android:id="@+id/bt_sequential"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/gap_normal"
+            android:layout_marginRight="@dimen/gap_normal"
+            android:text="@string/button_sequential"
+            />
+
     </LinearLayout>
 
     <TextView

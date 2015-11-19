@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.karumi.trabajandoendiferido.api.ApiCall;
 import com.karumi.trabajandoendiferido.server.MockApiCalls;
 import com.karumi.trabajandoendiferido.task.Task;
+import com.karumi.trabajandoendiferido.task.TaskSequential;
 import com.karumi.trabajandoendiferido.task.TaskWithAsyncTask;
 import com.karumi.trabajandoendiferido.task.TaskWithPromise;
 import com.karumi.trabajandoendiferido.task.TaskWithRx;
@@ -30,6 +31,7 @@ public class MainActivity extends Activity implements Ui {
   private long timeSending;
   private ApiCall apiCall;
   private TextView memView;
+  private Button sequentialButton;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -67,6 +69,19 @@ public class MainActivity extends Activity implements Ui {
         launchRx();
       }
     });
+
+    sequentialButton = ((Button) findViewById(R.id.bt_sequential));
+    sequentialButton.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        launchSequential();
+      }
+    });
+  }
+
+  private void launchSequential() {
+    initApiCall();
+    Task task = new TaskSequential(apiCall, this);
+    startTask(task);
   }
 
   private void launchRx() {
