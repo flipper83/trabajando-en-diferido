@@ -5,12 +5,10 @@ import com.karumi.trabajandoendiferido.api.response.ApiResponse;
 import com.karumi.trabajandoendiferido.ui.Ui;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executors;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.FuncN;
-import rx.internal.util.RxThreadFactory;
 import rx.schedulers.Schedulers;
 
 /**
@@ -27,7 +25,9 @@ public class TaskWithRx implements Task {
     List<Observable<ApiResponse>> calls = new ArrayList<>();
     for (int i = 0; i < totalTask; i++) {
       Observable<ApiResponse> apiResponseObservable = apiCall.callObservable(i + 1);
-      calls.add(apiResponseObservable);
+      Observable<ApiResponse> observableOnNewThread =
+          apiResponseObservable.subscribeOn(Schedulers.newThread());
+      calls.add(observableOnNewThread);
     }
 
     Observable.zip(calls, new FuncN<Long>() {
@@ -36,14 +36,15 @@ public class TaskWithRx implements Task {
       }
     })
         .subscribeOn(Schedulers.newThread())
-        .observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Long>() {
-      @Override public void call(Long time) {
-        ui.showTime(time);
-      }
-    }, new Action1<Throwable>() {
-      @Override public void call(Throwable throwable) {
-        ui.showError("error " + throwable);
-      }
-    });
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Action1<Long>() {
+          @Override public void call(Long time) {
+            ui.showTime(time);
+          }
+        }, new Action1<Throwable>() {
+          @Override public void call(Throwable throwable) {
+            ui.showError("error " + throwable);
+          }
+        });
   }
 }
