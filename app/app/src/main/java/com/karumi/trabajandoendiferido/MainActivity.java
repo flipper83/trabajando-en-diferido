@@ -10,6 +10,7 @@ import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import com.karumi.trabajandoendiferido.api.ApiCall;
 import com.karumi.trabajandoendiferido.server.MockApiCalls;
@@ -34,6 +35,7 @@ public class MainActivity extends Activity implements Ui {
   Handler handler = new Handler();
   private Button asyncTaskButton;
   private Button priorityQueueButton;
+  private Button priorityQueueWithConsumersButton;
   private Button promisesButton;
   private Button rxButton;
   private Button sequentialButton;
@@ -41,6 +43,7 @@ public class MainActivity extends Activity implements Ui {
   private long timeSending;
   private ApiCall apiCall;
   private TextView memView;
+  private EditText numApiCallViews;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -57,6 +60,7 @@ public class MainActivity extends Activity implements Ui {
     memView = ((TextView) findViewById(R.id.tv_mem));
     threadsView = ((TextView) findViewById(R.id.tv_threads));
     timeView = ((TextView) findViewById(R.id.tv_time));
+    numApiCallViews = ((EditText) findViewById(R.id.et_calls));
 
     asyncTaskButton = ((Button) findViewById(R.id.bt_asynctask));
     asyncTaskButton.setOnClickListener(new View.OnClickListener() {
@@ -68,7 +72,14 @@ public class MainActivity extends Activity implements Ui {
     priorityQueueButton = ((Button) findViewById(R.id.bt_priority_queue));
     priorityQueueButton.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        launchPriorityQueue();
+        launchPriorityQueue(false);
+      }
+    });
+
+    priorityQueueWithConsumersButton = ((Button) findViewById(R.id.bt_priority_queue_2));
+    priorityQueueWithConsumersButton.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        launchPriorityQueue(true);
       }
     });
 
@@ -94,9 +105,9 @@ public class MainActivity extends Activity implements Ui {
     });
   }
 
-  private void launchPriorityQueue() {
+  private void launchPriorityQueue(boolean withConsumers) {
     initApiCall();
-    Task task = new TaskWithPriorityJobQueue(apiCall, this, false);
+    Task task = new TaskWithPriorityJobQueue(apiCall, this, withConsumers);
     startTask(task);
   }
 
@@ -127,7 +138,9 @@ public class MainActivity extends Activity implements Ui {
   private void startTask(Task task) {
     timeSending = System.currentTimeMillis();
     setTimeLoading();
-    task.executeTask(this, 3);
+
+    String apiCallString = numApiCallViews.getText().toString();
+    task.executeTask(this, Integer.valueOf(apiCallString));
   }
 
   private void initApiCall() {

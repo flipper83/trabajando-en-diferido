@@ -30,11 +30,10 @@ public class MockApiCalls {
             } else if (request.getPath().equals("/2/")) {
               Thread.sleep(3000);
               return new MockResponse().setResponseCode(OK_STATUS).setBody("{\"value\":\"2\"}");
-            } else if (request.getPath().equals("/3/")) {
+            } else {
               Thread.sleep(4000);
               return new MockResponse().setResponseCode(OK_STATUS).setBody("{\"value\":\"3\"}");
             }
-            return new MockResponse().setResponseCode(404);
           }
         });
 
