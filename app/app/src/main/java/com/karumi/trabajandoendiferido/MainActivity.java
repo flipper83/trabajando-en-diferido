@@ -16,6 +16,7 @@ import com.karumi.trabajandoendiferido.server.MockApiCalls;
 import com.karumi.trabajandoendiferido.task.Task;
 import com.karumi.trabajandoendiferido.task.TaskSequential;
 import com.karumi.trabajandoendiferido.task.TaskWithAsyncTask;
+import com.karumi.trabajandoendiferido.task.TaskWithPriorityJobQueue;
 import com.karumi.trabajandoendiferido.task.TaskWithPromise;
 import com.karumi.trabajandoendiferido.task.TaskWithRx;
 import com.karumi.trabajandoendiferido.ui.ThreadColor;
@@ -32,13 +33,14 @@ public class MainActivity extends Activity implements Ui {
 
   Handler handler = new Handler();
   private Button asyncTaskButton;
+  private Button priorityQueueButton;
   private Button promisesButton;
   private Button rxButton;
+  private Button sequentialButton;
   private TextView timeView;
   private long timeSending;
   private ApiCall apiCall;
   private TextView memView;
-  private Button sequentialButton;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -63,6 +65,13 @@ public class MainActivity extends Activity implements Ui {
       }
     });
 
+    priorityQueueButton = ((Button) findViewById(R.id.bt_priority_queue));
+    priorityQueueButton.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        launchPriorityQueue();
+      }
+    });
+
     promisesButton = ((Button) findViewById(R.id.bt_promises));
     promisesButton.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
@@ -83,6 +92,12 @@ public class MainActivity extends Activity implements Ui {
         launchSequential();
       }
     });
+  }
+
+  private void launchPriorityQueue() {
+    initApiCall();
+    Task task = new TaskWithPriorityJobQueue(apiCall, this, false);
+    startTask(task);
   }
 
   private void launchSequential() {
