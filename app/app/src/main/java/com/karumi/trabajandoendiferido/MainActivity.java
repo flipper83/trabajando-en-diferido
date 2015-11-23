@@ -2,8 +2,12 @@ package com.karumi.trabajandoendiferido;
 
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -14,7 +18,10 @@ import com.karumi.trabajandoendiferido.task.TaskSequential;
 import com.karumi.trabajandoendiferido.task.TaskWithAsyncTask;
 import com.karumi.trabajandoendiferido.task.TaskWithPromise;
 import com.karumi.trabajandoendiferido.task.TaskWithRx;
+import com.karumi.trabajandoendiferido.ui.ThreadColor;
 import com.karumi.trabajandoendiferido.ui.Ui;
+import java.util.ArrayList;
+import java.util.List;
 import trabajandoendiferido.karumi.com.trabajandoendiferido.R;
 
 public class MainActivity extends Activity implements Ui {
@@ -145,10 +152,25 @@ public class MainActivity extends Activity implements Ui {
     String threadsText = "";
     for (Thread thread : threads) {
       if (thread != null) {
-        threadsText += thread.getName() + " " + thread.getState().name() + "/\n";
+        String text = thread.getName() + " " + thread.getState().name() + "/\n";
+        if (thread.getState() == Thread.State.RUNNABLE) {
+          colorize.add(new ThreadColor(position, text.length(), Color.BLUE));
+        } else if (thread.getState() == Thread.State.TIMED_WAITING) {
+          colorize.add(new ThreadColor(position, text.length(), Color.RED));
+        }
+        threadsText += text;
+        position += text.length();
       }
     }
-    threadsView.setText(threadsText);
+
+    Spannable spannableString = new SpannableString(threadsText);
+    for (ThreadColor threadColor : colorize) {
+      spannableString.setSpan(new ForegroundColorSpan(threadColor.getColor()),
+          threadColor.getOffset(), threadColor.getOffset() + threadColor.getSize(),
+          Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+    }
+
+    threadsView.setText(spannableString);
 
     handler.postDelayed(refreshThread, 200);
   }
