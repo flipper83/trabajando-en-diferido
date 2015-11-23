@@ -165,6 +165,9 @@ public class MainActivity extends Activity implements Ui {
     Thread[] threads = new Thread[count];
     Thread.enumerate(threads);
     String threadsText = "";
+    List<ThreadColor> colorize = new ArrayList<>();
+    int position = 0;
+
     for (Thread thread : threads) {
       if (thread != null) {
         String text = thread.getName() + " " + thread.getState().name() + "/\n";
