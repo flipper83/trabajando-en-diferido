@@ -6,5 +6,7 @@
   <string name="button_promises">Promises</string>
   <string name="button_rx">Reactive</string>
   <string name="button_sequential">Sequential</string>
-  <string name="button_priority_queue">Priority job queue</string>
+  <string name="button_priority_queue">job queue one consumer</string>
+  <string name="button_priority_consumers">job queue consumers</string>
+  <string name="num_calls">Api calls</string>
 </resources>

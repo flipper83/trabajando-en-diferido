@@ -14,29 +14,47 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="5thread"
-        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="@dimen/gap_normal"
         android:layout_marginTop="@dimen/gap_normal"
         />
-      <TextView
-          android:id="@+id/tv_mem"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          tools:text="200mb"
-          android:layout_centerHorizontal="true"
-          android:layout_marginTop="@dimen/gap_normal"
-          android:layout_below="@id/tv_num_thread"
-          />
+    <TextView
+        android:id="@+id/tv_mem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="200mb"
+        android:layout_marginLeft="@dimen/gap_normal"
+        android:layout_marginTop="@dimen/gap_normal"
+        android:layout_below="@id/tv_num_thread"
+        />
 
     <TextView
         android:id="@+id/tv_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/time_title"
-        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="@dimen/gap_normal"
         android:layout_marginTop="@dimen/gap_normal"
         android:layout_below="@id/tv_mem"
         />
 
+    <EditText
+        android:id="@+id/et_calls"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3"
+        android:layout_marginRight="@dimen/gap_normal"
+        android:layout_marginTop="@dimen/gap_normal"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/tv_num_thread"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/num_calls"
+        android:layout_toLeftOf="@id/et_calls"
+        android:layout_alignBaseline="@id/et_calls"
+        android:layout_marginRight="3dp"
+        />
     <LinearLayout
         android:id="@+id/ll_buttons"
         android:layout_width="match_parent"
@@ -55,40 +73,54 @@
           android:layout_marginLeft="@dimen/gap_normal"
           android:layout_marginRight="@dimen/gap_normal"
           />
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          android:layout_marginLeft="@dimen/gap_normal"
+          android:layout_marginRight="@dimen/gap_normal">
         <Button
             android:id="@+id/bt_priority_queue"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
             android:layout_height="wrap_content"
             android:text="@string/button_priority_queue"
-            android:layout_marginLeft="@dimen/gap_normal"
             android:layout_marginRight="@dimen/gap_normal"
             />
+        <Button
+            android:id="@+id/bt_priority_queue_2"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="wrap_content"
+            android:text="@string/button_priority_consumers"
+            />
+      </LinearLayout>
 
-        <Button
-            android:id="@+id/bt_promises"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/gap_normal"
-            android:layout_marginRight="@dimen/gap_normal"
-            android:text="@string/button_promises"
-            />
+      <Button
+          android:id="@+id/bt_promises"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="@dimen/gap_normal"
+          android:layout_marginRight="@dimen/gap_normal"
+          android:text="@string/button_promises"
+          />
 
-        <Button
-            android:id="@+id/bt_rx"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/gap_normal"
-            android:layout_marginRight="@dimen/gap_normal"
-            android:text="@string/button_rx"
-            />
-        <Button
-            android:id="@+id/bt_sequential"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/gap_normal"
-            android:layout_marginRight="@dimen/gap_normal"
-            android:text="@string/button_sequential"
-            />
+      <Button
+          android:id="@+id/bt_rx"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="@dimen/gap_normal"
+          android:layout_marginRight="@dimen/gap_normal"
+          android:text="@string/button_rx"
+          />
+      <Button
+          android:id="@+id/bt_sequential"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="@dimen/gap_normal"
+          android:layout_marginRight="@dimen/gap_normal"
+          android:text="@string/button_sequential"
+          />
 
     </LinearLayout>
 
