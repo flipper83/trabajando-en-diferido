@@ -207,7 +207,7 @@ public class MainActivity extends Activity implements Ui {
     long availableMegs = mi.availMem / 1048576L;
 
     //Percentage can be calculated for API 16+
-    long percentAvail = mi.availMem / mi.totalMem;
+    float percentAvail = (float)mi.availMem / (float)mi.totalMem;
 
     memView.setText("mem: " + availableMegs + "Mb / " + percentAvail);
   }
