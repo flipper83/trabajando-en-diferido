@@ -22,6 +22,7 @@ import com.karumi.trabajandoendiferido.task.TaskWithPromise;
 import com.karumi.trabajandoendiferido.task.TaskWithRx;
 import com.karumi.trabajandoendiferido.ui.ThreadColor;
 import com.karumi.trabajandoendiferido.ui.Ui;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import trabajandoendiferido.karumi.com.trabajandoendiferido.R;
@@ -221,7 +222,9 @@ public class MainActivity extends Activity implements Ui {
 
     //Percentage can be calculated for API 16+
     float percentAvail = (float)mi.availMem / (float)mi.totalMem;
+    DecimalFormat percentFormat = new DecimalFormat();
+    percentFormat.setMaximumFractionDigits(2);
 
-    memView.setText("mem: " + availableMegs + "Mb / " + percentAvail);
+    memView.setText("mem: " + availableMegs + "Mb / " + percentFormat.format(percentAvail));
   }
 }
